@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PulseTEXT · text to speech</title>
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0c0f" />
+    <meta
+      name="description"
+      content="PulseTEXT text to speech with 0% fees."
+    />
+    <!-- Same origin: leave empty. Other host: set config.js or this meta after install. -->
+    <!-- <meta name="pulsetext-api" content="" /> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Syne:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+    <div class="wave" aria-hidden="true"></div>
+
+    <header class="top">
+      <p class="brand">PulseTEXT</p>
+      <div class="top-actions">
+        <span class="meta" id="assetPrice">—</span>
+        <button type="button" id="howtoBtn" class="ghost">How to</button>
+        <button type="button" id="revokeAllBtn" class="ghost">Revoke all</button>
+        <button type="button" id="connectBtn" class="ghost">Connect</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="try talk">
+        <article class="stage-card talk-card" id="stageSend">
+          <p class="eyebrow">0% fees</p>
+          <h1>Text to speech</h1>
+          <p class="hint">Name, tip, and a line. Tick no message to tip only. Host decides what airs.</p>
+
+          <div class="split-fields">
+            <label>
+              Your name
+              <input
+                id="callerName"
+                type="text"
+                dir="ltr"
+                maxlength="64"
+                placeholder="What should they call you…"
+                autocomplete="nickname"
+              />
+            </label>
+            <label>
+              Tip ($)
+              <input id="depositAmount" type="text" inputmode="decimal" placeholder="5.00" autocomplete="off" />
+            </label>
+          </div>
+
+          <label>
+            Pay with
+            <select id="assetSelect"></select>
+            <span class="hint" id="assetPriceHint"></span>
+          </label>
+          <label>
+            Line
+            <textarea
+              id="ttsText"
+              rows="4"
+              dir="ltr"
+              spellcheck="true"
+              placeholder="What should they hear…"
+            ></textarea>
+          </label>
+          <label class="no-msg-row">
+            <input type="checkbox" id="noMessage" />
+            No message
+          </label>
+          <div class="cta-row talk-cta">
+            <button type="button" id="testPlayBtn" class="btn">Test play</button>
+            <button type="button" id="speakBtn" class="btn primary">Send to show</button>
+            <span id="priceHint" class="meta"></span>
+          </div>
+          <p id="thanksLine" class="thanks" hidden></p>
+          <p id="speakStatus" class="mono small"></p>
+          <p id="walletLine" class="mono small muted">Wallet connects when you send.</p>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      <span>Show wallet <code id="treasuryLine">—</code></span>
+    </footer>
+
+    <div id="howtoModal" class="modal" hidden>
+      <div class="modal-backdrop" data-howto-dismiss></div>
+      <div
+        class="modal-panel howto-modal-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="howtoModalTitle"
+      >
+        <header class="modal-head">
+          <h2 id="howtoModalTitle">How to</h2>
+          <button type="button" class="ghost modal-close" id="howtoModalClose" aria-label="Close">
+            Close
+          </button>
+        </header>
+        <div class="howto-body">
+          <article class="howto-step">
+            <h3>1 · Get a wallet</h3>
+            <p>
+              Any wallet that supports PulseChain. It holds your coins and signs payments.
+              PulseTEXT never sees your keys.
+            </p>
+            <p class="howto-actions">
+              <a
+                class="btn primary"
+                href="https://internetmoney.io/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Internet Money</a>
+            </p>
+          </article>
+          <article class="howto-step">
+            <h3>2 · Use PulseChain</h3>
+            <p>This show runs on PulseChain, not Ethereum. Add the chain to your wallet in one tap.</p>
+            <p class="howto-actions">
+              <button type="button" class="btn primary" id="addPulseChainBtn">Add PulseChain</button>
+            </p>
+            <p id="addPulseChainStatus" class="hint mono small"></p>
+          </article>
+          <article class="howto-step">
+            <h3>3 · Get PLS</h3>
+            <p>
+              You need a little PLS for gas, even if you tip with HEX, PLSX, or USDC.
+              If you have none yet, start here:
+            </p>
+            <ul class="howto-place-list">
+              <li>
+                <a href="https://bridge.pulsechain.com/" target="_blank" rel="noopener noreferrer">Bridge</a>
+                — move assets from Ethereum (first bridge often includes a little PLS for gas)
+              </li>
+              <li>
+                <a href="https://app.pulsex.com/" target="_blank" rel="noopener noreferrer">PulseX</a>
+                — swap into PLS on PulseChain
+              </li>
+              <li>
+                <a href="https://changenow.io/currencies/pulse" target="_blank" rel="noopener noreferrer">ChangeNOW</a>
+                — cross-chain swap into PLS
+              </li>
+              <li>
+                <a href="https://go.pulsechain.wiki/getting-started/getting-started" target="_blank" rel="noopener noreferrer">Getting started</a>
+                — short PulseChain onboarding guide
+              </li>
+            </ul>
+            <p class="howto-actions">
+              <a
+                class="btn"
+                href="https://bridge.pulsechain.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Bridge</a>
+              <a
+                class="btn"
+                href="https://app.pulsex.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >PulseX</a>
+              <a
+                class="btn"
+                href="https://changenow.io/currencies/pulse"
+                target="_blank"
+                rel="noopener noreferrer"
+              >ChangeNOW</a>
+              <a
+                class="btn"
+                href="https://scan.pulsechain.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >Scan</a>
+            </p>
+          </article>
+          <article class="howto-step">
+            <h3>4 · Tip and send</h3>
+            <ol>
+              <li>Name + dollar tip. Write a line, or tick <strong>No message</strong>.</li>
+              <li><strong>Send to show</strong> — wallet pops up. Host decides what airs.</li>
+              <li><strong>Revoke all</strong> if you want to clear approvals to this show.</li>
+            </ol>
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <script src="./config.js"></script>
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
