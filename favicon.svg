@@ -1,16 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PulseChain">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="PulseTEXT">
   <defs>
-    <linearGradient id="pc" x1="8" y1="56" x2="56" y2="8" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#c026d3"/>
-      <stop offset="45%" stop-color="#7c3aed"/>
+    <linearGradient id="pc" x1="0" y1="64" x2="64" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#d946ef"/>
+      <stop offset="50%" stop-color="#7c3aed"/>
       <stop offset="100%" stop-color="#22d3ee"/>
     </linearGradient>
   </defs>
-  <!-- Hexagon -->
-  <path fill="url(#pc)" d="M32 4 L56 18 L56 46 L32 60 L8 46 L8 18 Z"/>
-  <!-- Horizontal split -->
-  <path fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" d="M10 32 H54"/>
-  <!-- Pulse / EKG -->
-  <path fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"
-    d="M12 32 H22 L26 22 L31 42 L36 26 L40 32 H52"/>
+  <rect x="0" y="0" width="64" height="64" rx="14" fill="url(#pc)"/>
+  <path fill="none" stroke="#fff" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round"
+    d="M7 37 H20 L27 18 L36 46 L42 37 H57"/>
 </svg>
