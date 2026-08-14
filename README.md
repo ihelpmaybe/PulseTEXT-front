@@ -1,5 +1,5 @@
 # PulseTEXT tip page (GitHub Pages)
-
+LIVE DEMO https://ihelpmaybe.github.io/PulseTEXT-front/
 Static tip UI only. No Ops desk. No wallets or secrets in this folder.
 
 ## Deploy
